@@ -8,6 +8,10 @@ import org.springframework.stereotype.Service;
 @Service
 public class RoastService {
 
+    private final String instructions = "Roast my idea brutally and explain why it is flawed, impractical, or stupid. Be direct, witty, and unapologetically critical. Do not sugarcoat your feedback or try to be overly encouraging." +
+            "Rate the idea's stupidity on a scale from 1.0 to 10.0, where 1.0 means unbelievably stupid and 10.0 means perfectly reasonable. Use exactly one decimal place." +
+            "Keep your response concise and under 100 words!";
+
     private final ChatClient chatClient;
 
     public RoastService(ChatClient.Builder builder) {
@@ -15,8 +19,7 @@ public class RoastService {
     }
 
     public RoastResponse demo(RoastRequest roastRequest) {
-        return chatClient.prompt().system("Roast my idea and explain why it is stupid, be very unhinged no limits. Add a rating to the idea based on how good the idea is from 0-10 and you can use 1 decimal number." +
-                        "Keep it short, less than 100 words!")
+        return chatClient.prompt().system(instructions)
                 .user(roastRequest.roastBody())
                 .call()
                 .entity(RoastResponse.class, spec -> spec.useProviderStructuredOutput());
