@@ -25,7 +25,7 @@ form.addEventListener("submit", async (event) => {
         }
 
         const data = await res.json();
-        result.textContent = `${data.roastBody} — Rating: ${data.score.toFixed(1)}/10`;
+        result.textContent = `${data.roastBody} — Your idea is: ${data.roastScore.toFixed(1)}/10 garbage`;
     } catch (err) {
         console.error("Error: ", err);
         result.textContent = "Couldn't reach the server. Is it running?";
