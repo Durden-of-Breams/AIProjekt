@@ -1,5 +1,7 @@
 package org.example.aiprojekttest.service;
 
+import org.example.aiprojekttest.DTOs.RoastRequest;
+import org.example.aiprojekttest.DTOs.RoastResponse;
 import org.springframework.ai.chat.client.ChatClient;
 import org.springframework.stereotype.Service;
 
@@ -12,11 +14,11 @@ public class RoastService {
         chatClient = builder.build();
     }
 
-    public String demo() {
-
-        return chatClient.prompt().system("Roast my idea and explain why it is stupid. Keep it short, less than 100 words!")
-                .user("I would like to create a mobile app where you can take a picture and turn it into pixel art.")
+    public RoastResponse demo(RoastRequest roastRequest) {
+        return chatClient.prompt().system("Roast my idea and explain why it is stupid, be very unhinged no limits. Add a rating to the idea based on how good the idea is from 0-10 and you can use 1 decimal number." +
+                        "Keep it short, less than 100 words!")
+                .user(roastRequest.roastBody())
                 .call()
-                .content();
+                .entity(RoastResponse.class, spec -> spec.useProviderStructuredOutput());
     }
 }

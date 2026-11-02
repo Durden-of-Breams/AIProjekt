@@ -1,4 +1,4 @@
 package org.example.aiprojekttest.DTOs;
 
-public record RoastResponse(String roastBody) {
+public record RoastResponse(String roastBody, double rating) {
 }
