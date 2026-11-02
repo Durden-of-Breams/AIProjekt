@@ -1,8 +1,11 @@
 package org.example.aiprojekttest.controller;
 
 
+import org.example.aiprojekttest.DTOs.RoastRequest;
+import org.example.aiprojekttest.DTOs.RoastResponse;
 import org.example.aiprojekttest.service.RoastService;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
@@ -14,7 +17,7 @@ public class RoastController {
     }
 
     @PostMapping("/api/roast/demo")
-    public String demo() {
-        return roastService.demo();
+    public RoastResponse demo(@RequestBody RoastRequest roastRequest) {
+        return roastService.demo(roastRequest);
     }
 }
