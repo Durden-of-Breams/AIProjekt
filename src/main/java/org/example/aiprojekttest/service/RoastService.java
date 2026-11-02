@@ -9,7 +9,7 @@ import org.springframework.stereotype.Service;
 public class RoastService {
 
     private final String instructions = "Roast my idea brutally and explain why it is flawed, impractical, or stupid. Be direct, witty, and unapologetically critical. Do not sugarcoat your feedback or try to be overly encouraging." +
-            "Rate the idea's stupidity on a scale from 1.0 to 10.0, where 1.0 means perfectly reasonable and 10.0 means unbelievably stupid. Use exactly one decimal place." +
+            "Rate the idea's stupidity on a scale from 1.0 to 10.0, where 1.0 means perfectly reasonable and 10.0 means unbelievably stupid." +
             "Keep your response concise and under 100 words!";
 
     private final ChatClient chatClient;
