@@ -3,17 +3,21 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Roast My Idea</title>
+    <title>roast-my-idea</title>
+    <link rel="stylesheet" href="/frontend/index.css">
 </head>
 <body>
-<h1>Roast my idea</h1>
-<form id="roast-form">
-    <label for="idea">Your idea:</label>
-    <input id="idea" name="idea" type="text" required>
-    <button type="submit">Roast it</button>
-</form>
-<p id="result" aria-live="polite"></p>
-
+<main class="page">
+    <img src="/frontend/banner.png" alt="roast-my-idea" class="banner">
+    <section class="roast-card">
+        <form id="roast-form">
+            <label for="idea">What's your idea?</label>
+            <textarea id="idea" name="idea" rows="6" placeholder="Type your idea here..." required></textarea>
+            <button type="submit">Submit idea</button>
+        </form>
+        <p id="result" class="result" aria-live="polite"></p>
+    </section>
+</main>
 <script src="/frontend/main.js"></script>
 </body>
 </html>
