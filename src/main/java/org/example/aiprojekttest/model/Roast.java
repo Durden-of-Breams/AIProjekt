@@ -1,9 +1,6 @@
 package org.example.aiprojekttest.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 
 @Entity
 public class Roast {
@@ -12,29 +9,51 @@ public class Roast {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String input;
-    private String answer;
+    private String roast;
 
-    public Roast(String input, String answer) {
-        this.input = input;
-        this.answer = answer;
-    }
+    private double roastScore;
+
+    @ManyToOne
+    @JoinColumn(name = "idea_id")
+    private Idea idea;
 
     public Roast() {}
 
-    public String getInput() {
-        return input;
+    public Roast(Long id, String roast, double roastScore, Idea idea) {
+        this.id = id;
+        this.roast = roast;
+        this.roastScore = roastScore;
+        this.idea = idea;
     }
 
-    public String getAnswer() {
-        return answer;
+    //getters / setters
+
+
+    public Long getId() {
+        return id;
     }
 
-    public void setInput(String input) {
-        this.input = input;
+    public String getRoast() {
+        return roast;
     }
 
-    public void setAnswer(String answer) {
-        this.answer = answer;
+    public void setRoast(String roast) {
+        this.roast = roast;
+    }
+
+    public double getRoastScore() {
+        return roastScore;
+    }
+
+    public void setRoastScore(double roastScore) {
+        this.roastScore = roastScore;
+    }
+
+    public Idea getIdea() {
+        return idea;
+    }
+
+    public void setIdea(Idea idea) {
+        this.idea = idea;
     }
 }

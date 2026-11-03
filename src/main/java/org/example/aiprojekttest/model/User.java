@@ -15,7 +15,7 @@ public class User {
     private String username;
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Roast> roasts = new ArrayList<>();
+    private List<Idea> ideas = new ArrayList<>();
 
     // Mangler password (hashed spring security)
 
@@ -32,13 +32,5 @@ public class User {
 
     public String getUsername() {
         return username;
-    }
-
-    public void addRoast(Roast roast) {
-        roasts.add(roast);
-    }
-
-    public List<Roast> getRoasts() {
-        return roasts;
     }
 }
