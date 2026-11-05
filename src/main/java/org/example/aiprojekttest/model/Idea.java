@@ -36,6 +36,11 @@ public class Idea {
         roast.setIdea(this);
     }
 
+    public void removeRoast(Roast roast) {
+        roasts.remove(roast);
+        roast.setIdea(null);
+    }
+
     // getters / setters
 
     public Long getId() {
