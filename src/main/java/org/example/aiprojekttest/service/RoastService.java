@@ -11,6 +11,8 @@ import org.springframework.ai.chat.client.ChatClient;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class RoastService {
 
@@ -72,5 +74,9 @@ public class RoastService {
         idea.addRoast(roast);
         ideaRepository.save(idea);
         return roast;
+    }
+
+    public List<Roast> findAllRoasts() {
+        return roastRepository.findAll();
     }
 }
