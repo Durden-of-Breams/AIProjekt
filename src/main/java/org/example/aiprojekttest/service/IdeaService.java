@@ -1,10 +1,8 @@
-
 package org.example.aiprojekttest.service;
 
 import org.example.aiprojekttest.model.Idea;
 import org.example.aiprojekttest.repository.IdeaRepository;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -12,26 +10,13 @@ import java.util.List;
 public class IdeaService {
 
     private final IdeaRepository ideaRepository;
-    private final AppUserRepository appUserRepository;
 
-    public IdeaService(IdeaRepository ideaRepository, AppUserRepository appUserRepository) {
+    public IdeaService(IdeaRepository ideaRepository) {
         this.ideaRepository = ideaRepository;
-        this.appUserRepository = appUserRepository;
     }
 
-
-    @Transactional
-    public Idea createIdea(String ideaText, long userId) {
-        AppUser user = appUserRepository.findById(userId)
-                .orElseThrow(() -> new IllegalArgumentException("User not found: " + userId));
-
-        Idea idea = new Idea();
-        idea.setIdea(ideaText);
-
-        user.addIdea(idea);
-
-        appUserRepository.save(user);
-        return idea;
+    public Idea createIdea(String ideaText) {
+        return ideaRepository.save(new Idea(ideaText));
     }
 
     public Idea getIdeaById(long ideaId) {
@@ -41,10 +26,6 @@ public class IdeaService {
 
     public List<Idea> getAllIdeas() {
         return ideaRepository.findAll();
-    }
-
-    public List<Idea> getIdeasByUserId(long userId) {
-        return ideaRepository.findByAppUserId(userId);
     }
 
     public Idea saveIdea(Idea idea) {

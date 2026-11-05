@@ -1,0 +1,79 @@
+CREATE DATABASE IF NOT EXISTS aiApiDatabase;
+
+USE aiApiDatabase;
+
+
+-- =========================================
+-- TABLES
+-- =========================================
+
+CREATE TABLE IF NOT EXISTS idea (
+    id BIGINT AUTO_INCREMENT PRIMARY KEY,
+    idea TEXT NOT NULL
+) ENGINE = InnoDB;
+
+
+CREATE TABLE IF NOT EXISTS roast (
+    id BIGINT AUTO_INCREMENT PRIMARY KEY,
+    roast TEXT NOT NULL,
+    roast_score DECIMAL(3,1) NOT NULL,
+    idea_id BIGINT NOT NULL,
+
+    CONSTRAINT fk_roast_idea
+        FOREIGN KEY (idea_id)
+        REFERENCES idea(id)
+        ON DELETE CASCADE
+) ENGINE = InnoDB;
+
+
+-- =========================================
+-- ENSURE EXISTING COLUMNS ARE CORRECT
+-- =========================================
+
+ALTER TABLE idea
+    MODIFY COLUMN idea TEXT NOT NULL;
+
+ALTER TABLE roast
+    MODIFY COLUMN roast TEXT NOT NULL,
+    MODIFY COLUMN roast_score DECIMAL(3,1) NOT NULL;
+
+
+-- =========================================
+-- IDEAS
+-- =========================================
+
+INSERT INTO idea (id, idea) VALUES
+    (1, 'An app that reminds you to drink water by sending increasingly passive-aggressive notifications.'),
+    (2, 'A subscription service that delivers a single sock every month, so you never get a matching pair.'),
+    (3, 'A social network where you can only post pictures of your lunch, but only after it has gone cold.'),
+    (4, 'Smart umbrella that texts you when it is raining. Outside. While you are holding it.'),
+    (5, 'Uber for borrowing a ladder: a ladder arrives at your door within 15 minutes.'),
+    (6, 'A blockchain-based to-do list, because your groceries deserve immutability.'),
+    (7, 'Wi-Fi enabled toaster that posts your breakfast score on LinkedIn.'),
+    (8, 'Tinder for houseplants: match your fern with a compatible succulent.'),
+    (9, 'A meditation app that screams at you when you are not relaxed enough.')
+ON DUPLICATE KEY UPDATE
+    idea = VALUES(idea);
+
+
+-- =========================================
+-- ROASTS
+-- =========================================
+
+INSERT INTO roast (id, roast, roast_score, idea_id) VALUES
+    (1, 'Congratulations, you have invented a very expensive nagging spouse. Hydration was never this unpleasant.', 6.5, 1),
+    (2, 'People already ignore the 14 notifications they got today. Number 15 will not be the one that saves them.', 7.2, 1),
+    (3, 'A recurring subscription for loneliness in sock form. Your target market is washing machines.', 8.4, 2),
+    (4, 'Cold food, no filters, zero engagement. This is not a social network, it is a fridge with Wi-Fi.', 7.8, 3),
+    (5, 'Looking up from the phone you are reading it on would also reveal the rain. Revolutionary.', 8.9, 4),
+    (6, 'The umbrella is smarter than the idea behind it, and that is a low bar for an umbrella.', 8.1, 4),
+    (7, 'Honestly not terrible, but I am still not convinced a ladder needs to arrive faster than your motivation to fix the shelf.', 4.3, 5),
+    (8, 'You added a blockchain to a shopping list. Milk is now permanently on there, even after it expires.', 9.1, 6),
+    (9, 'Burnt toast was private until now. Thanks for making it a career-ending post.', 7.5, 7),
+    (10, 'Your fern is not looking for love, it is looking for sunlight. Swipe left on this pitch.', 6.9, 8),
+    (11, 'A tiny spark of creativity buried under a mountain of "why". Adorable, but nobody is paying for this.', 5.7, 8),
+    (12, 'Nothing says inner peace like being yelled at by your phone. Zen masters everywhere are filing a complaint.', 8.0, 9)
+ON DUPLICATE KEY UPDATE
+    roast = VALUES(roast),
+    roast_score = VALUES(roast_score),
+    idea_id = VALUES(idea_id);

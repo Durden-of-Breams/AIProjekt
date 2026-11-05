@@ -1,5 +1,7 @@
 package org.example.aiprojekttest.controller;
 
+import org.example.aiprojekttest.DTOs.IdeaDTO;
+import org.example.aiprojekttest.DTOs.IdeaRequest;
 import org.example.aiprojekttest.model.Idea;
 import org.example.aiprojekttest.service.IdeaService;
 import org.springframework.http.HttpStatus;
@@ -19,57 +21,41 @@ public class IdeaController {
     }
 
     @PostMapping
-    public ResponseEntity<IdeaResponse> createIdea(@RequestBody CreateIdeaRequest request) {
+    public ResponseEntity<IdeaDTO> createIdea(@RequestBody IdeaRequest request) {
         Idea idea = ideaService.createIdea(request.ideaText());
-
-        return ResponseEntity.status(HttpStatus.CREATED).body(toResponse(idea));
+        return ResponseEntity.status(HttpStatus.CREATED).body(toDto(idea));
     }
 
     @GetMapping("/{ideaId}")
-    public ResponseEntity<IdeaResponse> getIdeaById(@PathVariable long ideaId) {
-        Idea idea = ideaService.getIdeaById(ideaId);
-        return ResponseEntity.ok(toResponse(idea));
+    public ResponseEntity<IdeaDTO> getIdeaById(@PathVariable long ideaId) {
+        return ResponseEntity.ok(toDto(ideaService.getIdeaById(ideaId)));
     }
 
     @GetMapping
-    public ResponseEntity<List<IdeaResponse>> getAllIdeas() {
-        List<IdeaResponse> ideas = ideaService.getAllIdeas()
+    public ResponseEntity<List<IdeaDTO>> getAllIdeas() {
+        List<IdeaDTO> ideas = ideaService.getAllIdeas()
                 .stream()
-                .map(this::toResponse)
+                .map(this::toDto)
                 .toList();
 
         return ResponseEntity.ok(ideas);
     }
 
     @PutMapping("/{ideaId}")
-    public ResponseEntity<IdeaResponse> updateIdea(@PathVariable long ideaId, @RequestBody UpdateIdeaRequest request) {
-
+    public ResponseEntity<IdeaDTO> updateIdea(@PathVariable long ideaId, @RequestBody IdeaRequest request) {
         Idea idea = ideaService.getIdeaById(ideaId);
         idea.setIdea(request.ideaText());
 
-        Idea updatedIdea = ideaService.saveIdea(idea);
-
-        return ResponseEntity.ok(toResponse(updatedIdea));
+        return ResponseEntity.ok(toDto(ideaService.saveIdea(idea)));
     }
 
     @DeleteMapping("/{ideaId}")
-    public ResponseEntity<Void> deleteIdea(
-            @PathVariable long ideaId) {
-
+    public ResponseEntity<Void> deleteIdea(@PathVariable long ideaId) {
         ideaService.deleteIdea(ideaId);
         return ResponseEntity.noContent().build();
     }
 
-    private IdeaResponse toResponse(Idea idea) {
-        return new IdeaResponse(idea.getId(), idea.getIdea(), idea.getUser().getId());
-    }
-
-    public record CreateIdeaRequest(String ideaText, long userId) {
-    }
-
-    public record UpdateIdeaRequest(String ideaText) {
-    }
-
-    public record IdeaResponse(Long id, String idea, Long userId) {
+    private IdeaDTO toDto(Idea idea) {
+        return new IdeaDTO(idea.getId(), idea.getIdea());
     }
 }
