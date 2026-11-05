@@ -1,5 +1,6 @@
 const form = document.querySelector("#roast-form");
 const ideaInput = document.querySelector("#idea");
+const personalityInput = document.querySelector("#personality");
 const result = document.querySelector("#result");
 const button = form.querySelector("button");
 
@@ -16,7 +17,10 @@ form.addEventListener("submit", async (event) => {
         const res = await fetch("/api/roast/demo", {
             method: "POST",
             headers: {"Content-Type": "application/json"},
-            body: JSON.stringify({roastBody: idea})
+            body: JSON.stringify({
+                roastBody: idea,
+                personality: personalityInput.value
+            })
         });
 
         if (!res.ok) {

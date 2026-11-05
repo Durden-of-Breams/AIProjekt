@@ -56,7 +56,23 @@ h1 {
     line-height: 1.5;
 }
 
-#idea:focus {
+#roast-form label[for="personality"] {
+    margin-top: 16px;
+}
+
+#personality {
+    display: block;
+    width: 100%;
+    padding: 12px;
+    color: #f5f3fa;
+    background: #2d2a35;
+    border: 1px solid #5c5568;
+    border-radius: 8px;
+    font: inherit;
+}
+
+#idea:focus,
+#personality:focus {
     border-color: #b44bff;
     outline: 2px solid #b44bff;
     outline-offset: 2px;

@@ -14,9 +14,24 @@ import org.springframework.stereotype.Service;
 @Service
 public class RoastService {
 
-    private final String instructions = "Roast my idea brutally and explain why it is flawed, impractical, or stupid. Be direct, witty, and unapologetically critical. Do not sugarcoat your feedback or try to be overly encouraging." +
-            "Rate the idea's stupidity on a scale from 1.0 to 10.0, where 1.0 means perfectly reasonable and 10.0 means unbelievably stupid." +
-            "Keep your response concise and under 100 words!";
+    private static final String BASE_INSTRUCTIONS = """
+            Roast the user's idea brutally and explain why it is flawed, impractical, or stupid.
+            Be direct, witty, and unapologetically critical. Do not sugarcoat the feedback or become encouraging.
+            Rate the idea's stupidity on a scale from 1.0 to 10.0, where 1.0 means perfectly reasonable and 10.0 means unbelievably stupid.
+            Keep the response concise and under 100 words.
+            """;
+
+    private static final String GORDON_PERSONALITY = """
+            Act like gordon ramsey use some of his classic lines.
+            """;
+
+    private static final String FURRY_PERSONALITY = """
+            Write like a playful furry character. Use a lot of *nuzzles you* so the roleplay thingies. and also howl at the moon and be very cringy
+            """;
+
+    private static final String NERD_PERSONALITY = """
+            Use the voice of an obsessive technical nerd. Point out broken assumptions, edge cases, scaling problems, and bad architecture with precise but entertaining jargon. Also use achtually! to say something.
+            """;
 
 
     private final RoastRepository roastRepository;
@@ -31,10 +46,23 @@ public class RoastService {
 
     public RoastResponse demo(RoastRequest roastRequest) {
 
-        return chatClient.prompt().system(instructions)
+        return chatClient.prompt().system(BASE_INSTRUCTIONS + "\n" + personalityInstructions(roastRequest.personality()))
                 .user(roastRequest.roastBody())
                 .call()
                 .entity(RoastResponse.class, spec -> spec.useProviderStructuredOutput());
+    }
+
+    private String personalityInstructions(String personality) {
+        if (personality == null) {
+            return GORDON_PERSONALITY;
+        }
+
+        return switch (personality) {
+            case "furry" -> FURRY_PERSONALITY;
+            case "nerd" -> NERD_PERSONALITY;
+            case "fiery-chef" -> GORDON_PERSONALITY;
+            default -> GORDON_PERSONALITY;
+        };
     }
 
 
