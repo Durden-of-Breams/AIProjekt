@@ -19,9 +19,7 @@ public class IdeaController {
     }
 
     @PostMapping
-    public ResponseEntity<IdeaResponse> createIdea(
-            @RequestBody CreateIdeaRequest request) {
-
+    public ResponseEntity<IdeaResponse> createIdea(@RequestBody CreateIdeaRequest request) {
         Idea idea = ideaService.createIdea(request.ideaText(), request.userId());
 
         return ResponseEntity.status(HttpStatus.CREATED).body(toResponse(idea));

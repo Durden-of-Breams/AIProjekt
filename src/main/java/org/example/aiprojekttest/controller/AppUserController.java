@@ -18,14 +18,6 @@ public class AppUserController {
         this.appUserService = appUserService;
     }
 
-
-    @PostMapping
-    public ResponseEntity<AppUser> createUser(@RequestBody CreateUserRequest request) {
-        AppUser user = appUserService.createUser(request.username());
-
-        return ResponseEntity.status(HttpStatus.CREATED).body(user);
-    }
-
     @GetMapping("/{userId}")
     public ResponseEntity<AppUser> getUserById(@PathVariable long userId) {
         AppUser user = appUserService.getUserById(userId);
@@ -36,14 +28,5 @@ public class AppUserController {
     @GetMapping
     public ResponseEntity<List<AppUser>> getAllUsers() {
         return ResponseEntity.ok(appUserService.getAllUsers());
-    }
-
-    @DeleteMapping("/{userId}")
-    public ResponseEntity<Void> deleteUser(@PathVariable long userId) {
-        appUserService.deleteUser(userId);
-        return ResponseEntity.noContent().build();
-    }
-
-    public record CreateUserRequest(String username) {
     }
 }

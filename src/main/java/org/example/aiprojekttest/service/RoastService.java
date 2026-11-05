@@ -1,6 +1,7 @@
 package org.example.aiprojekttest.service;
 
 import jakarta.transaction.Transactional;
+import org.example.aiprojekttest.DTOs.RoastDTO;
 import org.example.aiprojekttest.DTOs.RoastRequest;
 import org.example.aiprojekttest.DTOs.RoastResponse;
 import org.example.aiprojekttest.model.Idea;
@@ -78,5 +79,23 @@ public class RoastService {
 
     public List<Roast> findAllRoasts() {
         return roastRepository.findAll();
+    }
+
+
+    @Transactional
+    public RoastDTO generateAndSaveRoast(RoastRequest request) {
+
+        RoastResponse response = demo(request);
+
+        Idea idea = new Idea();
+        idea.setIdea(request.roastBody());
+
+        Roast roast = new Roast(response.roastBody(), response.roastScore(), null);
+
+        idea.addRoast(roast);
+
+        Idea savedIdea = ideaRepository.save(idea);
+
+        return new RoastDTO(roast.getId(), savedIdea.getIdea(), roast.getRoast(), roast.getRoastScore());
     }
 }

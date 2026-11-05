@@ -13,10 +13,13 @@ form.addEventListener("submit", async (event) => {
     result.textContent = "Roasting your idea to an atomic crisp! Hold on, wait...";
 
     try {
-        const res = await fetch("/api/roast/demo", {
+        const res = await fetch("/api/roasts", {
             method: "POST",
             headers: {"Content-Type": "application/json"},
-            body: JSON.stringify({roastBody: idea})
+            body: JSON.stringify(
+                {
+                    roastBody: idea
+                })
         });
 
         if (!res.ok) {
@@ -25,7 +28,8 @@ form.addEventListener("submit", async (event) => {
         }
 
         const data = await res.json();
-        result.textContent = `${data.roastBody}` + `\n \nYour idea is: ${data.roastScore.toFixed(1)}/10 garbage`;
+        result.textContent = `${data.roast}\n\nYour idea is: ${Number(data.roastScore).toFixed(1)}/10 garbage`;
+
     } catch (err) {
         console.error("Error: ", err);
         result.textContent = "Couldn't reach the server. Is it running?";
