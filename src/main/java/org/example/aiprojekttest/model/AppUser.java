@@ -31,6 +31,19 @@ public class AppUser {
 
     public AppUser() {}
 
+    public Long getId() {
+        return id;
+    }
+
+    public List<Idea> getIdeas() {
+        return ideas;
+    }
+
+    public void removeIdea(Idea idea) {
+        ideas.remove(idea);
+        idea.setUser(null);
+    }
+
     public void setUsername(String username) {
         this.username = username;
     }
