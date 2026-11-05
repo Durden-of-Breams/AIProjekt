@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-public class User {
+public class AppUser {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -14,17 +14,22 @@ public class User {
 
     private String username;
 
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "appUser", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Idea> ideas = new ArrayList<>();
 
     // Mangler password (hashed spring security)
 
     // Skal nok ændres depending af hvad vi vil bruge det til og hvor vidt man starter med roasts.
-    public User(String username) {
+    public AppUser(String username) {
         this.username = username;
     }
 
-    public User() {}
+    public void addIdea(Idea idea) {
+        ideas.add(idea);
+        idea.setUser(this);
+    }
+
+    public AppUser() {}
 
     public void setUsername(String username) {
         this.username = username;

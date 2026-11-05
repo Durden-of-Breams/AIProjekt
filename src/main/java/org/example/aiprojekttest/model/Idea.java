@@ -3,6 +3,7 @@ package org.example.aiprojekttest.model;
 
 import jakarta.persistence.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -16,21 +17,24 @@ public class Idea {
 
     @ManyToOne
     @JoinColumn(name = "user_id")
-    private User user;
+    private AppUser appUser;
 
     @OneToMany(mappedBy = "idea", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Roast> responses;
+    private List<Roast> roasts = new ArrayList<>();
 
 
     public Idea() {}
 
-    public Idea(Long id, String idea, User user, List<Roast> responses) {
-        this.id = id;
+    public Idea(String idea, AppUser appUser) {
         this.idea = idea;
-        this.user = user;
-        this.responses = responses;
+        this.appUser = appUser;
     }
 
+
+    public void addRoast(Roast roast) {
+        roasts.add(roast);
+        roast.setIdea(this);
+    }
 
     // getters / setters
 
@@ -46,19 +50,19 @@ public class Idea {
         this.idea = idea;
     }
 
-    public User getUser() {
-        return user;
+    public AppUser getUser() {
+        return appUser;
     }
 
-    public void setUser(User user) {
-        this.user = user;
+    public void setUser(AppUser appUser) {
+        this.appUser = appUser;
     }
 
-    public List<Roast> getResponses() {
-        return responses;
+    public List<Roast> getRoasts() {
+        return roasts;
     }
 
-    public void setResponses(List<Roast> responses) {
-        this.responses = responses;
+    public void setRoasts(List<Roast> roasts) {
+        this.roasts = roasts;
     }
 }

@@ -19,8 +19,8 @@ public class Roast {
 
     public Roast() {}
 
-    public Roast(Long id, String roast, double roastScore, Idea idea) {
-        this.id = id;
+
+    public Roast(String roast, double roastScore, Idea idea) {
         this.roast = roast;
         this.roastScore = roastScore;
         this.idea = idea;
