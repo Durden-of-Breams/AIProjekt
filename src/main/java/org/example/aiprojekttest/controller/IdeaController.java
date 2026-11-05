@@ -20,7 +20,7 @@ public class IdeaController {
 
     @PostMapping
     public ResponseEntity<IdeaResponse> createIdea(@RequestBody CreateIdeaRequest request) {
-        Idea idea = ideaService.createIdea(request.ideaText(), request.userId());
+        Idea idea = ideaService.createIdea(request.ideaText());
 
         return ResponseEntity.status(HttpStatus.CREATED).body(toResponse(idea));
     }
@@ -34,18 +34,6 @@ public class IdeaController {
     @GetMapping
     public ResponseEntity<List<IdeaResponse>> getAllIdeas() {
         List<IdeaResponse> ideas = ideaService.getAllIdeas()
-                .stream()
-                .map(this::toResponse)
-                .toList();
-
-        return ResponseEntity.ok(ideas);
-    }
-
-    @GetMapping("/user/{userId}")
-    public ResponseEntity<List<IdeaResponse>> getIdeasByUserId(
-            @PathVariable long userId) {
-
-        List<IdeaResponse> ideas = ideaService.getIdeasByUserId(userId)
                 .stream()
                 .map(this::toResponse)
                 .toList();

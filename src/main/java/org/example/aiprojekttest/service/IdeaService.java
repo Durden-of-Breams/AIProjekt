@@ -1,9 +1,7 @@
 
 package org.example.aiprojekttest.service;
 
-import org.example.aiprojekttest.model.AppUser;
 import org.example.aiprojekttest.model.Idea;
-import org.example.aiprojekttest.repository.AppUserRepository;
 import org.example.aiprojekttest.repository.IdeaRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

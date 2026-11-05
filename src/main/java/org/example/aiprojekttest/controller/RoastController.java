@@ -1,10 +1,8 @@
-
 package org.example.aiprojekttest.controller;
 
 import org.example.aiprojekttest.DTOs.RoastDTO;
 import org.example.aiprojekttest.DTOs.RoastRequest;
 import org.example.aiprojekttest.DTOs.RoastResponse;
-import org.example.aiprojekttest.model.Roast;
 import org.example.aiprojekttest.service.RoastService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -30,13 +28,11 @@ public class RoastController {
 
     @PostMapping("/demo")
     public ResponseEntity<RoastResponse> generateRoastNoSave(@RequestBody RoastRequest request) {
-        RoastResponse response = roastService.demo(request);
-
-        return ResponseEntity.ok(response);
+        return ResponseEntity.ok(roastService.demo(request));
     }
 
     @GetMapping("/findall")
-    public List<Roast> getAllRoasts() {
-        return roastService.findAllRoasts();
+    public ResponseEntity<List<RoastDTO>> getAllRoasts() {
+        return ResponseEntity.ok(roastService.findAllRoasts());
     }
 }

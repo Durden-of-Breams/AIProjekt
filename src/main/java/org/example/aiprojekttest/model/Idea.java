@@ -1,6 +1,5 @@
 package org.example.aiprojekttest.model;
 
-
 import jakarta.persistence.*;
 
 import java.util.ArrayList;
@@ -16,21 +15,14 @@ public class Idea {
     @Column(columnDefinition = "TEXT")
     private String idea;
 
-    @ManyToOne
-    @JoinColumn(name = "user_id")
-    private AppUser appUser;
-
     @OneToMany(mappedBy = "idea", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Roast> roasts = new ArrayList<>();
 
-
     public Idea() {}
 
-    public Idea(String idea, AppUser appUser) {
+    public Idea(String idea) {
         this.idea = idea;
-        this.appUser = appUser;
     }
-
 
     public void addRoast(Roast roast) {
         roasts.add(roast);
@@ -54,14 +46,6 @@ public class Idea {
 
     public void setIdea(String idea) {
         this.idea = idea;
-    }
-
-    public AppUser getUser() {
-        return appUser;
-    }
-
-    public void setUser(AppUser appUser) {
-        this.appUser = appUser;
     }
 
     public List<Roast> getRoasts() {
